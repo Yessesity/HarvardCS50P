@@ -12,10 +12,10 @@ def main():
         Figlet.setFont(figlet, font=font)
         print(figlet.renderText(input_text))
     else:
-        figlet1 = Figlet()
         if is_invalid_argument():
             sys.exit("Invalid usage")
         else:
+            figlet1 = Figlet()
             input_text = input("Input: ")
             font1 = sys.argv[2]
             Figlet.setFont(figlet1, font=font1)
