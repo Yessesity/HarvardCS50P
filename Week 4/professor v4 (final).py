@@ -41,7 +41,7 @@ def get_level():
     while True:
         try:
             level = int(input("Level: "))
-            if level != 1 and level != 2 and level !=3:
+            if level not in [1, 2, 3]:
                 pass
             else:
                 return level
