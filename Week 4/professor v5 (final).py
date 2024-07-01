@@ -12,7 +12,7 @@ def main():
         ans = generate_question(x, y)
         if correct_answer(x, y, ans):
             question_number += 1
-        elif incorrect_answer(x, y, ans):                 
+        elif incorrect_answer(x, y, ans):
             print("EEE")
             guess: int = 1
             while True:
@@ -68,7 +68,7 @@ def generate_integer(level):
         return random.randint(10, 99)
     else:
         return random.randint(100, 999)
-    
+
 
 def generate_correct_ans(x, y):
     return print(f"{x} + {y} = {x+y}")
@@ -76,3 +76,4 @@ def generate_correct_ans(x, y):
 
 if __name__ == "__main__":
     main()
+
