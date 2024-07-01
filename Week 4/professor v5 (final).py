@@ -9,14 +9,14 @@ def main():
     while question_number != 10:
         x = generate_integer(level)
         y = generate_integer(level)
-        ans = generate_question(x, y)
+        ans: int = generate_question(x, y)
         if correct_answer(x, y, ans):
             question_number += 1
         elif incorrect_answer(x, y, ans):
             print("EEE")
             guess: int = 1
             while True:
-                ans = generate_question(x, y)
+                ans: int = generate_question(x, y)
                 if correct_answer(x, y, ans):
                     question_number += 1
                     break
