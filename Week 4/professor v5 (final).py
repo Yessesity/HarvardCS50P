@@ -14,7 +14,7 @@ def main():
             question_number += 1
         elif incorrect_answer(x, y, ans):
             print("EEE")
-            guess: int = 1
+            chance: int = 1
             while True:
                 ans: int = generate_question(x, y)
                 if correct_answer(x, y, ans):
@@ -22,8 +22,8 @@ def main():
                     break
                 if incorrect_answer(x, y, ans):
                     print("EEE")
-                    guess += 1
-                if guess == 3:
+                    chance += 1
+                if chance == 3:
                     generate_correct_ans(x, y)
                     incorrect += 1
                     question_number += 1
@@ -58,7 +58,10 @@ def get_level():
 
 
 def generate_question(x, y):
-    return int(input(f"{x} + {y} = "))
+    try:
+        return int(input(f"{x} + {y} = "))
+    except Exception:
+        pass
 
 
 def generate_integer(level):
@@ -76,4 +79,3 @@ def generate_correct_ans(x, y):
 
 if __name__ == "__main__":
     main()
-
