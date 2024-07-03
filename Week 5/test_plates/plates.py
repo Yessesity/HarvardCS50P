@@ -26,7 +26,6 @@ def is_valid(string):
     else:
         return True
 
-
 def letter_inbetween_num(string):
     for i in range(1, len(string) - 1):
         if string[i].isalpha():
