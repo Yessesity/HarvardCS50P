@@ -1,6 +1,7 @@
 import sys
 from PIL import Image, ImageOps
 
+
 def main():
     try:
         if len(sys.argv) > 3:
@@ -26,6 +27,7 @@ def main():
 
 def same_file_extension():
     return sys.argv[1].split(".")[-1] == sys.argv[2].split(".")[-1]
+
 
 if __name__ == "__main__":
     main()
