@@ -26,7 +26,6 @@ class Extension:
                 return "application/octet-stream"
 
 
-
 def main():
     file = get_extension(get_input("File name: "))
     print(file.extension())
