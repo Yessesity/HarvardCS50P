@@ -6,9 +6,11 @@
 
 2. Install playsound version 1.2.2, specifically install this version of the library because later versions will generate error, some context: https://stackoverflow.com/questions/68704443/python-playsound-error-261-for-command-the-driver-cannot-recognize-the-specifie
 
-3. Follow the text prompts accurately. Even though I have done a lot of error checking, I still cannot assure that all errors are accounted for.
+3. Make sure that you have used <cd path/to/pomodoro> in order to make sure alarm.mp3 and config.csv are accessible by the code
 
-4. Enjoy!
+4. Follow the text prompts accurately. Even though I have done a lot of error checking, I still cannot assure that all errors are accounted for.
+
+5. Enjoy!
 
 #### Program Explanation:
 
