@@ -1,36 +1,45 @@
 import csv
 import sys
 import time
+
 from playsound import playsound
 
+DEFAULT_WORK = 25
+DEFAULT_REST = 5
+DEFAULT_LONG_REST = 15
 
 def main():
     binary = get()
-    work, rest = get_work_rest(binary)
-    while True:
-        timer_interface(work, "\nTime to start working! Type 'start' to initialize the timer.")
+    work, rest, long_rest = get_work_rest(binary)
+    cycle = 0
+    while cycle < 4:
+        cycle += 1
+        timer_interface(work, f"\nTime to start working! Type 'start' to initialize the timer. Cycle: {cycle}")
         playsound("alarm.mp3")
-        timer_interface(rest, "\nTime to rest! Type 'start' to initialize rest timer.")
+        if cycle < 4:
+            timer_interface(rest, "\nTime to rest! Type 'start' to initialize rest timer.")
+        else:
+            timer_interface(long_rest, "\nTime to get a long rest! Type 'start' to initialize long rest timer.")
         playsound("alarm.mp3")
+        if cycle == 4:
+            cycle -= 4
         if not repeat():
             return
         
 
-def get_work_rest(binary):
+def get_work_rest(binary) -> tuple[int, int, int]:
     if binary == "n":
-        work = 25
-        rest = 5
-        return work, rest
+        return DEFAULT_WORK, DEFAULT_REST, DEFAULT_LONG_REST
     elif binary == "y":
         try:
-            work, rest = get_durations()
-            write_durations(work, rest)
+            work, rest, long_rest = get_durations()
+            write_durations(work, rest, long_rest)
         except TypeError:
-            work, rest = reader()
-        return work, rest
+            work, rest, long_rest = reader()
+        return work, rest, long_rest
         
 
-def repeat():
+def repeat() -> bool:
     while True:
         binary = input("Do 1 more set of Pomodoro? (y/n)\n").lower().strip()
         if binary == "y":
@@ -76,7 +85,7 @@ def get() -> str:
     return binary
 
 
-def get_durations() -> int:
+def get_durations() -> tuple[int, int, int]:
     bin = (
         input(
             "Would you like to open an existing config.csv? (if no, edit config.csv) (y/n)\n"
@@ -99,31 +108,40 @@ def get_durations() -> int:
             rest = int(
                 input("Input the duration (in minutes) of your desired rest:\n").strip()
             )
-            if work > 60 or rest > 60 or work <= 0 or rest <=0:
+            long_rest = int(
+                input("Input the duration (in minutes) of your desired long rest:\n").strip()
+            )
+            if any(x > 60 or x <= 0 for x in (work, rest, long_rest)):
                 print("-" * 60, "\nInvalid input/s, try again")
-                pass
+                continue
             else:
-                return work, rest
+                return work, rest, long_rest
         except ValueError:
             pass
 
 
-def write_durations(wrk: int, rst: int):
+def write_durations(wrk: int, rst: int, lngrst: int) -> None:
     with open("config.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["work", wrk])
         writer.writerow(["rest", rst])
+        writer.writerow(["long rest", lngrst])
 
 
-def reader() -> tuple:
+def reader() -> tuple[int, int, int]:
     temp = []
-    with open(f"config.csv") as file:
-        reader = csv.reader(file)
-        for row in reader:
-            temp.append(row)
-    work = temp[0][1]
-    rest = temp[1][1]
-    return work, rest
+    try:
+        with open(f"config.csv") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                temp.append(row)
+        work = temp[0][1]
+        rest = temp[1][1]
+        long_rest = temp[2][1]
+        return work, rest, long_rest
+    except Exception:
+        print("Error reading config.csv, using default values instead")
+        return DEFAULT_WORK, DEFAULT_REST, DEFAULT_LONG_REST
 
 
 if __name__ == "__main__":
